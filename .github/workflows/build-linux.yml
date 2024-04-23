@@ -1,6 +1,8 @@
 name: Build and test
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  pull_request:
 
 env:
   URL: https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
