@@ -10,7 +10,7 @@ jobs:
       - name: Build for Linux x86-64
         run: |
           cd ..
-          curl -L -O https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
+          curl --no-progress-meter -L -O https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
           cd ccl
-          tar xf ../linuxx8664.tar.gz
+          tar xf ../linuxx86.tar.gz
           ./lx86cl64 --batch --quiet -n -e '(rebuild-ccl :clean t)' </dev/null
