@@ -6,8 +6,8 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-      - name: Build for Linux x86-64
       - uses: actions/checkout@v4
+      - name: Build for Linux x86-64
         run: |
           curl -L -O https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
           cd ccl
