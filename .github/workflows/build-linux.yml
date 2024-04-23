@@ -1,16 +1,37 @@
-name: Build CCL from source
+name: Build and test
 
 on: workflow_dispatch
+
+env:
+  URL: https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
 
 jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Build for Linux x86-64
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          path: ccl
+
+      - name: Fetch bootstrapping binaries
         run: |
-          cd ..
-          curl --no-progress-meter -L -O https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
+          curl --no-progress-meter -L -O ${{ env.$URL }}
+
+      - name: Install bootstrapping binaries
+        run: |
           cd ccl
           tar xf ../linuxx86.tar.gz
+
+      - name: Compile lisp kernel
+        run: |
+          cd ccl/lisp-kernel/linuxx8664
+          make
+
+      - name: Rebuild CCL
+        run: |
+          cd ccl
           ./lx86cl64 --batch --quiet -n -e '(rebuild-ccl :clean t)' </dev/null
+          # see if it works to start up the just-compiled lisp
+          ./lx86cl64 --batch -n </dev/null
+          
