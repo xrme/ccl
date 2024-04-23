@@ -1,0 +1,15 @@
+name: Build CCL from source
+
+on: workflow_dispatch
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build for Linux x86-64
+        run: |
+          curl -L -O https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
+          cd ccl
+          tar xf ../linuxx8664.tar.gz
+          ./lx86cl64 --batch --quiet -n -e '(rebuild-ccl :clean t)' </dev/null
