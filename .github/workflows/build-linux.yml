@@ -9,6 +9,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build for Linux x86-64
         run: |
+          pwd
+          ls
           curl -L -O https://github.com/Clozure/ccl/releases/latest/download/linuxx86.tar.gz
           cd ccl
           tar xf ../linuxx8664.tar.gz
