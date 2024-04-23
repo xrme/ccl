@@ -1,4 +1,4 @@
-name: Build CCL from source
+name: Build CCL from source on x8664 Linux
 
 on: workflow_dispatch
 
