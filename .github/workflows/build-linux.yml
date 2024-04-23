@@ -38,6 +38,7 @@ jobs:
       - name: Check out tests
         uses: actions/checkout@v4
         with:
+          repository: Clozure/ccl-tests
           path: ccl-tests
 
       - name: Run tests
