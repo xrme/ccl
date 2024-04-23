@@ -16,7 +16,7 @@ jobs:
 
       - name: Fetch bootstrapping binaries
         run: |
-          curl --no-progress-meter -L -O ${{ env.$URL }}
+          curl --no-progress-meter -L -O ${{ env.URL }}
 
       - name: Install bootstrapping binaries
         run: |
@@ -34,4 +34,15 @@ jobs:
           ./lx86cl64 --batch --quiet -n -e '(rebuild-ccl :clean t)' </dev/null
           # see if it works to start up the just-compiled lisp
           ./lx86cl64 --batch -n </dev/null
+
+      - name: Check out tests
+        uses: actions/checkout@v4
+        with:
+          path: ccl-tests
+
+      - name: Run tests
+        run: |
+          cd ccl-tests
+          make CCL=../ccl/lx86cl64
+  
           
