@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-        with:
-          path: ccl
 
       - name: Fetch bootstrapping binaries
         run: |
@@ -31,15 +29,21 @@ jobs:
       - name: Rebuild CCL
         run: |
           cd ccl
+          git describe
+          ./lx86cl64 --batch -e '(progn
+                                   (print (ccl::ccl-directory))
+                                   (print (ccl::local-git-revision)))' </dev/null
           ./lx86cl64 --batch --quiet -n -e '(rebuild-ccl :clean t)' </dev/null
           # see if it works to start up the just-compiled lisp
           ./lx86cl64 --batch -n </dev/null
 
+      - name: Bail out
+        run: exit 1
+    
       - name: Check out tests
         uses: actions/checkout@v4
         with:
           repository: Clozure/ccl-tests
-          path: ccl-tests
 
       - name: Run tests
         run: |
